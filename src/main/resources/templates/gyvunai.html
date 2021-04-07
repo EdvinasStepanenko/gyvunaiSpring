@@ -121,7 +121,7 @@
 		<th> Atgabentas iš </th>
 		<tr th:each="zoo: ${gyvunai}">
 			<td th:text="${zoo.getPav()}"></td>
-			<td th:text="${zoo.getKilmes_salis.getKilmes_salis()}"></td>
+			<td th:text="${zoo.getKilmes_salis == null ? '???' : zoo.getKilmes_salis().getKilmes_salis()}"></td>
 			<td th:text="${zoo.getNarvo_nr()}"></td>
 			<td th:text="${zoo.getAtgabentas()}"></td>	
 			<td th:text="${zoo.getAtgabentas_is()}"></td>		

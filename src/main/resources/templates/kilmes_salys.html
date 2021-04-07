@@ -19,7 +19,7 @@
   	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   	<script>
   		/*
-  		function addMiestas() {
+  		function addKilmesSalis() {
   		
   			alert( "tuoj pridesim" );
   			$( '#miesto-forma' ).submit();
@@ -105,9 +105,8 @@
 	</div>	
 	<table>
 		<tr th:each="ks : ${salys}">
-			<td th:text="${ks.getPav()}"></td>
 			<td th:text="${ks.getKilmes_salis()}"></td>
-				
+			<td <span th:each="gyvunai : ${ks.getGyvunai()}" th:text="|${ks.getPav()} |"></span></td>	
 
 		</tr>
 	</table>	

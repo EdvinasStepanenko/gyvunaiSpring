@@ -1,30 +1,21 @@
 package gyvunai;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 	public class Kilmes_salis implements Serializable {
 	
-  /*  @ManyToOne
-    @JoinColumn(name="pav", referencedColumnName="pav", insertable=false, updatable=false)
-    private Gyvunai gyvunai;    
-
-
-	public Gyvunai getGyvunai() {
-		return gyvunai;
-	}
-
-	public void setGyvunai(Gyvunai gyvunai) {
-		this.gyvunai = gyvunai;
-	}*/
-
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer Id;
@@ -32,6 +23,18 @@ import java.io.Serializable;
     private String pav;	
 
     private String kilmes_salis;
+    
+    @OneToMany(/*mappedBy = "Miestas",*/cascade = CascadeType.ALL)
+    @JoinColumn(name="pav", referencedColumnName="pav", insertable=false, updatable=false)    
+    private List<Gyvunai> gyvunai;     
+
+	public List<Gyvunai> getGyvunai() {
+		return gyvunai;
+	}
+
+	public void setGyvunai(List<Gyvunai> gyvunai) {
+		this.gyvunai = gyvunai;
+	}
 
 	public Integer getId() {
 		return Id;
