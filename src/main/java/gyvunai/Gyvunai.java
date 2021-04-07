@@ -4,9 +4,10 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
-public class Gyvunai {
+public class Gyvunai implements Serializable {
 	
 	 @Id
 	    @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -19,7 +20,20 @@ public class Gyvunai {
 	    private String atgabentas;
 	    
 	    private String atgabentas_is;
+	    
+	    @ManyToOne
+	    @JoinColumn(name="pav", referencedColumnName="pav", insertable=false, updatable=false)
+	    private Kilmes_salis kilmes_salis;    
 
+
+		public Kilmes_salis getKilmes_salis() {
+			return kilmes_salis;
+		}
+
+		public void setKilmes_salis(Kilmes_salis kilmes_salis) {
+			this.kilmes_salis = kilmes_salis;
+		}
+		
 		public Integer getId() {
 			return Id;
 		}
