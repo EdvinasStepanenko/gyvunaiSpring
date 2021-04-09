@@ -34,7 +34,7 @@ public class AtaskaitaController {
 
 
 	@RequestMapping(path="/kas_ka_valgo", method={ RequestMethod.GET, RequestMethod.POST })
-    public String miestai( @RequestParam(name="ivedimas", required=false, defaultValue="") Integer ivedimas 
+    public String miestai( @RequestParam(name="ivedimas", required=false, defaultValue="0") Integer ivedimas 
 			, @RequestParam(name="ieskoti", required=false, defaultValue="neieskoti") String ieskoti			
 			, Model model) {
 
