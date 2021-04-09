@@ -27,6 +27,7 @@ public class GyvunaiController {
 			, @RequestParam(name="narvo_nr", required=false, defaultValue="") Integer narvo_nr
 			, @RequestParam(name="atgabentas", required=false, defaultValue="") String atgabentas
 			, @RequestParam(name="atgabentas_is", required=false, defaultValue="0") String atgabentas_is
+			, @RequestParam(name="maitinimo_id", required=false, defaultValue="0") Integer maitinimo_id
 			, @RequestParam(name="add", required=false, defaultValue="nesaugoti") String add			
 			, Model model) {
 
@@ -57,7 +58,7 @@ public class GyvunaiController {
 			gyvunai.setNarvo_nr( narvo_nr );
 			gyvunai.setAtgabentas( atgabentas );
 			gyvunai.setAtgabentas_is ( atgabentas_is );
-
+			gyvunai.setMaitinimo_id ( maitinimo_id );
 
 		    gyvunai_repository.save ( gyvunai );
 		    res = "Saugota";
@@ -75,11 +76,17 @@ public class GyvunaiController {
 		String res = "Bandom ieškoti \n";
 
 		Gyvunai gyvunai123 = new Gyvunai();
+		
+		System.out.println(gyvunai123);
+	
 
+		
 		if (id > 0) {
 
 			Optional <Gyvunai> found = gyvunai_repository.findById( id );
-
+			
+			System.out.println(found);
+			
 			// variantas trynimuiui
 			// uzsakymaiRepository.deleteById(id);
 
@@ -88,14 +95,16 @@ public class GyvunaiController {
 			   gyvunai123 = found.get();
 			   gyvunai123.setId ( id );
 			   res += "Įrašas surastas \n";
-
+			   
 			} else {
 
 				res += "Klaida įrašas galėjoi būti pašalintas \n";
 			}
 		}		
 		System.out.println(res);
+		
 		return gyvunai123;
+		
 	}
 
 

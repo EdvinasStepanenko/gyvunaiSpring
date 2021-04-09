@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Zoo</title>
+	<meta charset="utf-8">
+</head>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+					$.ajax({
+						 method: 'GET'
+				 		 , url: '/salinti-gyvuna'
+				 		 , data: {
+				 		 	id: id_gyv
+				 		 }
+					}).done( function( data ) {
+
+						if ( data != null ) {
+		
+							$( '#id').val ( data.id );
+		      					
+		      				location.reload(); 					
+						}
+						console.log ( JSON.stringify ( data ) );
+				  	});			    		
+
+  		}
+  		
+
+  		$( document ).ready ( function() {
+
+</script>
+<body>
+	<table>
+		<tr th:each="valgytojai : ${valgytojai}">
+			<td th:text="${valgytojai[0]}"></td>
+			<td th:text="${valgytojai[1]}"></td>	
+			<td th:text="${valgytojai[2]}"></td>	
+		</tr>
+	</table>	
+	<div>
+  		<p>Įveskite skaičių</p>	
+		<form method="POST" action="">
+			  <fieldset>
+				<label for="ivedimas">Kas Kiek Valgo?</label>
+				<input type="text" id="ivedimas" value="">			
+				<input type="submit" name="ieskoti" id="ieskoti" value="ieskoti" >
+			  </fieldset>
+		</form>	
+	</div>		
+</body>
+</html> 

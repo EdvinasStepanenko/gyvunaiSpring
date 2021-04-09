@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.io.Serializable;
 
 @Entity
@@ -21,8 +24,19 @@ public class Gyvunai implements Serializable {
 	    
 	    private String atgabentas_is;
 	    
-	    @ManyToOne
+	    private Integer maitinimo_id;
+
+	    public Integer getMaitinimo_id() {
+			return maitinimo_id;
+		}
+
+		public void setMaitinimo_id(Integer maitinimo_id) {
+			this.maitinimo_id = maitinimo_id;
+		}
+
+		@ManyToOne
 	    @JoinColumn(name="pav", referencedColumnName="pav", insertable=false, updatable=false)
+	    @JsonIgnoreProperties(value = {"gyvunai"}, allowSetters=true)
 	    private Kilmes_salis kilmes_salis;    
 
 
@@ -34,6 +48,19 @@ public class Gyvunai implements Serializable {
 			this.kilmes_salis = kilmes_salis;
 		}
 		
+	    @ManyToOne
+	    @JoinColumn(name="maitinimo_id", referencedColumnName="id", insertable=false, updatable=false)
+	    private Maitinimas maitinimas;    
+
+		
+		public Maitinimas getMaitinimas() {
+			return maitinimas;
+		}
+
+		public void setMaitinimas(Maitinimas maitinimas) {
+			this.maitinimas = maitinimas;
+		}
+
 		public Integer getId() {
 			return Id;
 		}

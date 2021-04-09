@@ -24,9 +24,47 @@
   			$( '#gyvuno-forma' ).submit();
 
   		}
+  		
+  		 function delGyvunas() {
+
+					$.ajax({
+						 method: 'GET'
+				 		 , url: '/salinti-gyvuna'
+				 		 , data: {
+				 		 	id: id_gyv
+				 		 }
+					}).done( function( data ) {
+
+						if ( data != null ) {
+		
+							$( '#id').val ( data.id );
+		      					
+		      				location.reload(); 					
+						}
+						console.log ( JSON.stringify ( data ) );
+				  	});			    		
+
+  		}
+  		
 
   		$( document ).ready ( function() {
-
+  		
+  		 	id_gyv = 0;
+  		 	
+		  	dialogas = $( "#dialog-confirm" ).dialog({
+		      resizable: false,
+		      height: "auto",
+		      width: 400,
+		      modal: true,
+		      autoOpen: false,
+		      buttons: {
+		        "Delete all items": delGyvunas,
+		        Cancel: function() {
+		          dialogas.dialog( "close" );
+		       	}
+		       }
+		    });
+		 
 		    dialog = $( "#dialog-form" ).dialog({
 		      autoOpen: false,
 		      height: 400,
@@ -50,6 +88,7 @@
 		      dialog.dialog( "open" );
 		    });
 		    
+		    
 		    $( ".edit" ).each ( function() {
 
 		    	$( this ).click ( function() {
@@ -64,7 +103,7 @@
 				 		 }
 					}).done( function( data ) {
 
-						// alert ( "gauti duomenys: " + data );
+						alert ( "gauti duomenys: " + data );
 						if ( data != null ) {
 
 							$( '#pav' ).val ( data.pav );
@@ -72,6 +111,7 @@
 							$( '#atgabentas' ).val ( data.atgabentas );
 							$( '#atgabentas_is' ).val ( data.atgabentas_is );			
 							$( '#id').val ( data.id );
+							$( '#maitinimo_id').val ( data.maitinimo_id );
 		      				dialog.dialog( "open" );							
 						}
 						console.log ( JSON.stringify ( data ) );
@@ -84,25 +124,10 @@
 		     $( ".delete" ).each ( function() {
 
 		    	$( this ).click ( function() {
-
+					dialogas.dialog( "open" );	
 		    		id_gyv = $( this ).data ( 'del_id' );
 
-					$.ajax({
-						 method: 'GET'
-				 		 , url: '/salinti-gyvuna'
-				 		 , data: {
-				 		 	id: id_gyv
-				 		 }
-					}).done( function( data ) {
 
-						if ( data != null ) {
-		
-							$( '#id').val ( data.id );
-		      			//	dialog.dialog( "open" );		
-		      				location.reload(); 					
-						}
-						console.log ( JSON.stringify ( data ) );
-				  	});			    		
 
 		    	});	
 		    	
@@ -119,12 +144,14 @@
 		<th> Narvo Numeris </th>
 		<th> Atgabentas </th>
 		<th> Atgabentas iš </th>
+		<th> Dieta </th>
 		<tr th:each="zoo: ${gyvunai}">
 			<td th:text="${zoo.getPav()}"></td>
-			<td th:text="${zoo.getKilmes_salis == null ? '???' : zoo.getKilmes_salis().getKilmes_salis()}"></td>
+			<td th:text="${zoo.getKilmes_salis() == null ? '???' : zoo.getKilmes_salis().getKilmes_salis()}"></td>
 			<td th:text="${zoo.getNarvo_nr()}"></td>
 			<td th:text="${zoo.getAtgabentas()}"></td>	
 			<td th:text="${zoo.getAtgabentas_is()}"></td>		
+			<td th:text="${zoo.getMaitinimas() == null ? '???' : zoo.getMaitinimas().getDieta()}"></td>
 			<td><input type="button" class="edit" th:attr="data-el_id=${zoo.getId()}" value="&#9998;"></td>				
 			<td><input type="button" class="delete" th:attr="data-del_id=${zoo.getId()}" value="&#10006;"></td>		
 		</tr>
@@ -148,14 +175,19 @@
 				<input type="text" name="atgabentas" id="atgabentas" value="" class="text ui-widget-content ui-corner-all">
 				<label for="atgabentas_is">Atgabentas iš</label>
 				<input type="text" name="atgabentas_is" id="atgabentas_is" value="" class="text ui-widget-content ui-corner-all">
+				<label for="maitinimo_id">Maitinimo Id</label>
+				<input type="text" name="maitinimo_id" id="maitinimo_id" value="" class="text ui-widget-content ui-corner-all">
 				<input type="hidden" id="id" name="id" value="0">		
 				<input type="hidden" id="add" name="add" value="add">
 			    <!-- Allow form submission with keyboard without duplicating the dialog button -->
 			    <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">		
-			    
+
 			    		
 			  </fieldset>
 		</form>	
 	</div>	
+	<div id="dialog-confirm" title="Empty the recycle bin?">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>These items will be permanently deleted and cannot be recovered. Are you sure?</p>
+	</div>
 </body>
 </html>
